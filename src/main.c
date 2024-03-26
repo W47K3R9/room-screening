@@ -9,7 +9,7 @@ int main() {
   // Max Speed for BME280 Sensor is 3.4 MHz
   // Arduino runs at 16 MHz
   // For I2C Clock of 400 kHz speed,
-  // set value of 24 without prescaling.
+  // set value of 12 without prescaling.
   init_i2c(12, 0);
   init_uart_transmission((uint16_t)9600);
   bme_init(&bme_transmit_status);
@@ -31,7 +31,8 @@ int main() {
     send_signed_decimal(raw_temperature);
     send_string("\r\nIn degrees: ");
     int32_t real_temp = compensate_temp(raw_temperature, &bme280_comp_vals);
-    send_signed_decimal(real_temp);
+    float formatted_temp = (float) real_temp * 0.01;
+    send_float(formatted_temp, 2);
     send_string("\r\n");
   }
   return 0;

@@ -1,6 +1,6 @@
 #include "bme280_measure.h"
 #include "i2c_transmission.h"
-#include "uart_transmission.h"
+// #include "uart_transmission.h"
 #include "util/delay.h"
 #include <stdint.h>
 #include <string.h>
@@ -173,13 +173,6 @@ uint32_t bme_get_temp_raw(uint8_t oversampling, TransmitStatus *tsp) {
     return check_status;
   }
   // Get the correct value (1. xlsb 7-4; 2. lsb; 3. msb)
-  send_string("\r\n");
-  send_signed_decimal((int32_t)temp_data_buf[0] << 12);
-  send_string("\r\n");
-  send_signed_decimal((int32_t)temp_data_buf[1] << 4);
-  send_string("\r\n");
-  send_signed_decimal((int32_t)temp_data_buf[2] >> 4);
-  send_string("\r\n");
   raw_temp = ((int32_t)temp_data_buf[0] << 12) |
              ((int32_t)temp_data_buf[1] << 4) | (temp_data_buf[2] >> 4);
   strcpy(tsp->status_msg, "TEMP_LD_SUCC");
