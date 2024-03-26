@@ -203,6 +203,7 @@ uint8_t start_measurement(uint8_t ovs_t, uint8_t ovs_p, uint8_t ovs_h,
     strcpy(tsp->status_msg, "START_MEAS_ERR");
     return check_status;
   }
+  // Max Value here is about 120 ms so uint8_t is enough.
   uint8_t dly = estimate_delay_ms(ovs_t, ovs_p, ovs_h);
   _delay_ms(dly);
   return 0;
