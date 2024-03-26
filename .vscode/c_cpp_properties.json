@@ -1,0 +1,68 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/Users/Lucas/Software_Projects/ATmega/room-screening/include",
+                "/Users/Lucas/Software_Projects/ATmega/room-screening/src",
+                "/Users/Lucas/Software_Projects/ATmega/room-screening/lib/bme280_measure",
+                "/Users/Lucas/Software_Projects/ATmega/room-screening/lib/uart_transmission",
+                "/Users/Lucas/Software_Projects/ATmega/room-screening/lib/i2c_transmission",
+                "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/cores/MiniCore",
+                "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/variants/standard",
+                "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/AVR_examples/src",
+                "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/EEPROM/src",
+                "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/Flash/src",
+                "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/SPI/src",
+                "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/SPI1/src",
+                "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/SoftwareSerial/src",
+                "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/Wire/src",
+                "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/Wire1/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/Users/Lucas/Software_Projects/ATmega/room-screening/include",
+                    "/Users/Lucas/Software_Projects/ATmega/room-screening/src",
+                    "/Users/Lucas/Software_Projects/ATmega/room-screening/lib/bme280_measure",
+                    "/Users/Lucas/Software_Projects/ATmega/room-screening/lib/uart_transmission",
+                    "/Users/Lucas/Software_Projects/ATmega/room-screening/lib/i2c_transmission",
+                    "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/cores/MiniCore",
+                    "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/variants/standard",
+                    "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/AVR_examples/src",
+                    "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/EEPROM/src",
+                    "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/Flash/src",
+                    "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/SPI/src",
+                    "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/SPI1/src",
+                    "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/SoftwareSerial/src",
+                    "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/Wire/src",
+                    "/Users/Lucas/.platformio/packages/framework-arduino-avr-minicore/libraries/Wire1/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60114",
+                "ARDUINO_AVR_ATmega328P",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega328P__",
+                ""
+            ],
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++17",
+            "compilerPath": "/Users/Lucas/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
