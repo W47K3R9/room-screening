@@ -21,19 +21,24 @@ int main() {
   send_string("\r\nLoading Values status:\r\n");
   send_string(bme_transmit_status.status_msg);
   send_string("\r\n");
-  uint32_t raw_temperature = 0;
+  float temperature = 0;
+  float humidity = 0;
   while (1) {
-    _delay_ms(1000);
-    raw_temperature = bme_get_temp_raw(16, &bme_transmit_status);
-    send_string("\r\nTemperature read status:\r\n");
+    _delay_ms(5000);
+
+    temperature =
+        bme_get_temp_degrees(&bme280_comp_vals, 16, &bme_transmit_status);
+    send_string("\r\n\r\nTemperature read status:\r\n");
     send_string(bme_transmit_status.status_msg);
-    send_string("\r\nRaw Temperature: ");
-    send_signed_decimal(raw_temperature);
-    send_string("\r\nIn degrees: ");
-    int32_t real_temp = compensate_temp(raw_temperature, &bme280_comp_vals);
-    float formatted_temp = (float) real_temp * 0.01;
-    send_float(formatted_temp, 2);
-    send_string("\r\n");
+    send_string("\r\nTemperature in degrees: ");
+    send_float(temperature, 2);
+    send_string(" °C\r\n");
+    humidity = bme_get_hum_percent(&bme280_comp_vals, 16, &bme_transmit_status);
+    send_string("\r\nHumidity read status:\r\n");
+    send_string(bme_transmit_status.status_msg);
+    send_string("\r\nHumidity in percent: ");
+    send_float(humidity, 2);
+    send_string(" %\r\n");
   }
   return 0;
 }
