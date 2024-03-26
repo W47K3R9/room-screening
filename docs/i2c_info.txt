@@ -1,0 +1,53 @@
+I2C (Inter IC Communication) or due to legal issues with Philips 
+sometimes called TWI (Two Wire Interface) has:
+
+- Two Wires for Connection: Clock, Data (serial)
+- Adress for each connected Element
+- Master/Slave 
+- 8 Bit oriented
+- Max Freq. is 3.4 MHz
+
+Master does:
+
+- initialize
+- clock
+- terminate
+
+Wire Names (typically)
+- SCL -> Signal Clock
+- SDA -> Signal Data
+
+Wires are bidirectional and have a pull-up resistor.
+
+Data has to be constant during each clock pulse.
+
+Start and End of transmission is signaled with a condition.
+
+Start Condition: SDA H -> L during H SCL
+End Condition:   SDA L -> H during H SCL
+
+Every passed byte has to be ACKnowledged.
+Data has to be sended with MSB first.
+
+Clock Stretching possible for slow Slaves.
+
+I2C sends Data within Packages with usually 9 Bit.
+-> Adresspackage
+-> Datapackage
+
+First Byte after Start Condition is usually Address of Slave.
+(Only Exception is general call)
+
+Addresspackage:
+[x x x x x x x] [x] [x]
+7 Bits Address  R/W ACK
+
+Read: High, Write: Low
+ACK: Low
+
+ACK is sent by Receiver
+
+If Master is Receiver all Packages except the last are ACKed.
+If Slave is Receiver all Packages including the last are ACKed.
+
+Slave System Clock should be around 16x faster than I2C Clock.
