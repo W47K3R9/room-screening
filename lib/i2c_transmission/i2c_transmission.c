@@ -179,7 +179,7 @@ uint8_t master_receive_nbytes(uint8_t address, uint8_t *storage,
   }
 
   // Now the reading process begins.
-  for (int i = 0; i < num_bytes - 2; i++) {
+  for (int i = 0; i < num_bytes - 1; i++) {
     // Enable the first data package.
     TWCR = (1 << TWEN) | (1 << TWINT) | (1 << TWEA);
     while (!(TWCR & (1 << TWINT)))

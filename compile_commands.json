@@ -156,19 +156,19 @@
         "output": ".pio/build/uno/libb20/i2c_transmission/i2c_transmission.c.o"
     },
     {
-        "command": "/Users/Lucas/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/uno/liba16/bme280_measure/bme280_measure.c.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -Ilib/bme280_measure -Ilib/i2c_transmission -I/Users/Lucas/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/Lucas/.platformio/packages/framework-arduino-avr/variants/standard lib/bme280_measure/bme280_measure.c",
-        "directory": "/Users/Lucas/Software_Projects/ATmega/room-screening",
-        "file": "lib/bme280_measure/bme280_measure.c",
-        "output": ".pio/build/uno/liba16/bme280_measure/bme280_measure.c.o"
-    },
-    {
         "command": "/Users/Lucas/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/uno/lib751/uart_transmission/uart_transmission.c.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -Ilib/uart_transmission -I/Users/Lucas/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/Lucas/.platformio/packages/framework-arduino-avr/variants/standard lib/uart_transmission/uart_transmission.c",
         "directory": "/Users/Lucas/Software_Projects/ATmega/room-screening",
         "file": "lib/uart_transmission/uart_transmission.c",
         "output": ".pio/build/uno/lib751/uart_transmission/uart_transmission.c.o"
     },
     {
-        "command": "/Users/Lucas/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/uno/src/main.c.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -Iinclude -Isrc -Ilib/uart_transmission -Ilib/bme280_measure -Ilib/i2c_transmission -I/Users/Lucas/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/Lucas/.platformio/packages/framework-arduino-avr/variants/standard src/main.c",
+        "command": "/Users/Lucas/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/uno/liba16/bme280_measure/bme280_measure.c.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -Ilib/bme280_measure -Ilib/uart_transmission -Ilib/i2c_transmission -I/Users/Lucas/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/Lucas/.platformio/packages/framework-arduino-avr/variants/standard lib/bme280_measure/bme280_measure.c",
+        "directory": "/Users/Lucas/Software_Projects/ATmega/room-screening",
+        "file": "lib/bme280_measure/bme280_measure.c",
+        "output": ".pio/build/uno/liba16/bme280_measure/bme280_measure.c.o"
+    },
+    {
+        "command": "/Users/Lucas/.platformio/packages/toolchain-atmelavr/bin/avr-gcc -o .pio/build/uno/src/main.c.o -c -std=gnu11 -fno-fat-lto-objects -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -Iinclude -Isrc -Ilib/bme280_measure -Ilib/uart_transmission -Ilib/i2c_transmission -I/Users/Lucas/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/Lucas/.platformio/packages/framework-arduino-avr/variants/standard src/main.c",
         "directory": "/Users/Lucas/Software_Projects/ATmega/room-screening",
         "file": "src/main.c",
         "output": ".pio/build/uno/src/main.c.o"
