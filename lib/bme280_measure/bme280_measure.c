@@ -121,7 +121,7 @@ void bme_load_comp_vals(SensorConstants *scp, TransmitStatus *tsp) {
   scp->dig_P8 = comp_buffer[20] | ((uint16_t)comp_buffer[21] << 8);
   scp->dig_P9 = comp_buffer[22] | ((uint16_t)comp_buffer[23] << 8);
   // only the first humidity constant in this buffer
-  scp->dig_H1 = comp_buffer[24];
+  scp->dig_H1 = comp_buffer[25];
   // start reading of second part of variables
   check_status =
       master_transmit_read_reg(BME280_ADDRESS_GND, BME280_COMPENSATE_REG_2);
@@ -138,7 +138,8 @@ void bme_load_comp_vals(SensorConstants *scp, TransmitStatus *tsp) {
   scp->dig_H2 = comp_buffer[0] | ((uint16_t)comp_buffer[1] << 8);
   scp->dig_H3 = comp_buffer[2];
   scp->dig_H4 = ((uint16_t)comp_buffer[3] << 4) | (comp_buffer[4] & 0x0F);
-  scp->dig_H5 = (comp_buffer[4] & 0xF0) | ((uint16_t)comp_buffer[5] << 4);
+  scp->dig_H5 =
+      ((comp_buffer[4] & 0xF0) >> 4) | ((uint16_t)comp_buffer[5] << 4);
   scp->dig_H6 = comp_buffer[6];
   strcpy(tsp->status_msg, "COMP_LD_SUCC");
 }
@@ -281,11 +282,9 @@ uint32_t bme_get_hum_raw(uint8_t oversampling, TransmitStatus *tsp) {
 }
 
 float bme_get_hum_percent(SensorConstants *scp, uint8_t oversampling,
-                           TransmitStatus *tsp) {
+                          TransmitStatus *tsp) {
   uint32_t raw_hum = bme_get_hum_raw(oversampling, tsp);
   uint32_t humidity = compensate_hum(raw_hum, scp);
-  float percent_hum = (float)humidity * BME280_HUM_PERCENT_FACTOR;
+  float percent_hum = (float)humidity / 1024;
   return percent_hum;
 }
-
-

@@ -41,7 +41,6 @@
 #define BME280_TEMP_LEN 3
 #define BME280_HUM_REG 0xFD
 #define BME280_HUM_LEN 2
-#define BME280_HUM_PERCENT_FACTOR 1/1024
 
 typedef struct {
   uint16_t dig_T1;
