@@ -110,7 +110,6 @@ void bme_load_comp_vals(SensorConstants *scp, TransmitStatus *tsp) {
   scp->dig_T1 = comp_buffer[0] | ((uint16_t)comp_buffer[1] << 8);
   scp->dig_T2 = comp_buffer[2] | ((uint16_t)comp_buffer[3] << 8);
   scp->dig_T3 = comp_buffer[4] | ((uint16_t)comp_buffer[5] << 8);
-
   // read in all pressure compensation values
   scp->dig_P1 = comp_buffer[6] | ((uint16_t)comp_buffer[7] << 8);
   scp->dig_P2 = comp_buffer[8] | ((uint16_t)comp_buffer[9] << 8);
