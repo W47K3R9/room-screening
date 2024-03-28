@@ -6,6 +6,7 @@
 
 int main() {
   TransmitStatus bme_transmit_status;
+  SensorConstants bme_sensor_constants;
   // Max Speed for BME280 Sensor is 3.4 MHz
   // Arduino runs at 16 MHz
   // For I2C Clock of 400 kHz speed,
@@ -16,8 +17,7 @@ int main() {
   send_string("\r\nInitialization status:\r\n");
   send_string(bme_transmit_status.status_msg);
   send_string("\r\n");
-  SensorConstants bme280_comp_vals;
-  bme_load_comp_vals(&bme280_comp_vals, &bme_transmit_status);
+  bme_load_comp_vals(&bme_sensor_constants, &bme_transmit_status);
   send_string("\r\nLoading Values status:\r\n");
   send_string(bme_transmit_status.status_msg);
   send_string("\r\n");
@@ -25,17 +25,17 @@ int main() {
   float humidity = 0;
   while (1) {
     _delay_ms(5000);
-
     temperature =
-        bme_get_temp_degrees(&bme280_comp_vals, 16, &bme_transmit_status);
+        bme_get_temp_degrees(&bme_sensor_constants, 16, &bme_transmit_status);
     send_string("\r\n\r\nTemperature read status:\r\n");
     send_string(bme_transmit_status.status_msg);
     send_string("\r\nTemperature in degrees: ");
     send_float(temperature, 2);
     send_string(" °C\r\n");
-    humidity = bme_get_hum_percent(&bme280_comp_vals, 16, &bme_transmit_status);
+    humidity =
+        bme_get_hum_percent(&bme_sensor_constants, 16, &bme_transmit_status);
     // humidity = bme_get_hum_raw(16, &bme_transmit_status);
-    // uint32_t hum_comp = compensate_hum(humidity, &bme280_comp_vals);
+    // uint32_t hum_comp = compensate_hum(humidity, &bme_sensor_constants);
     send_string("\r\nHumidity read status:\r\n");
     send_string(bme_transmit_status.status_msg);
     send_string("\r\nHumidity in percent: ");

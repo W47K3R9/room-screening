@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <string.h>
 
+
 // Compensation Function for raw temperature readings.
 // raw_temp: int32_t containing the raw temperature data of the sensor.
 int32_t compensate_temp(uint32_t raw_temp, SensorConstants *scp) {
@@ -28,6 +29,7 @@ int32_t compensate_temp(uint32_t raw_temp, SensorConstants *scp) {
   }
   return temperature;
 }
+
 
 // Compensation Function for raw humidity readings.
 // raw_hum: uint32_t containing the raw humidity data of the sensor.
@@ -57,6 +59,7 @@ uint32_t compensate_hum(uint32_t raw_hum, SensorConstants *scp) {
   hum_buffer = (hum_buffer > 419430400 ? 419430400 : hum_buffer);
   return (uint32_t)(hum_buffer >> 12);
 }
+
 
 // Initialize the sensor, will apply a soft reset and deactivate filters.
 // tsp: Pointer to transmission status codes.
@@ -88,6 +91,7 @@ void bme_init(TransmitStatus *tsp) {
   tsp->chip_id = returned_id;
   strcpy(tsp->status_msg, "INIT_SUCC");
 }
+
 
 // Function to load compensation values stored within the sensor.
 // scp: Pointer to buffer in which the constants should be stored.
@@ -143,6 +147,7 @@ void bme_load_comp_vals(SensorConstants *scp, TransmitStatus *tsp) {
   scp->dig_H6 = comp_buffer[6];
   strcpy(tsp->status_msg, "COMP_LD_SUCC");
 }
+
 
 // Local function to determine the basic oversampling rate
 uint8_t determine_general_ovs(uint8_t oversampling) {
@@ -204,6 +209,7 @@ void worst_case_delay(uint8_t ovs_t, uint8_t ovs_p, uint8_t ovs_h) {
   }
 }
 
+
 // Local function to transmit start of measurement and provide enough
 // delay for the measurement to complete.
 uint8_t start_measurement(uint8_t ovs_t, uint8_t ovs_p, uint8_t ovs_h,
@@ -230,6 +236,7 @@ uint8_t start_measurement(uint8_t ovs_t, uint8_t ovs_p, uint8_t ovs_h,
   worst_case_delay(ovs_t, ovs_p, ovs_h);
   return 0;
 }
+
 
 // Get the raw temperature value.
 // oversampling: Choose temperature oversempling.
@@ -263,6 +270,7 @@ uint32_t bme_get_temp_raw(uint8_t oversampling, TransmitStatus *tsp) {
   return raw_temp;
 }
 
+
 // Returns the raw measured temperature in degrees.
 // scp: Pointer to sensor constants.
 // oversampling: Choose temperature oversempling.
@@ -276,6 +284,11 @@ float bme_get_temp_degrees(SensorConstants *scp, uint8_t oversampling,
   return degree_temp;
 }
 
+
+// Get the raw humidity value.
+// oversampling: Choose humidity oversempling.
+//  Valid values are 1, 2, 4, 8 and 16 other values result in oversampling = 1.
+// tsp: Pointer to transmission status codes.
 uint32_t bme_get_hum_raw(uint8_t oversampling, TransmitStatus *tsp) {
   // Start the measurement but only for humidity.
   uint8_t check_status = start_measurement(0, 0, oversampling, tsp);
@@ -303,6 +316,12 @@ uint32_t bme_get_hum_raw(uint8_t oversampling, TransmitStatus *tsp) {
   return raw_hum;
 }
 
+
+// Returns the raw measured humidity in degrees.
+// scp: Pointer to sensor constants.
+// oversampling: Choose humidity oversempling.
+//  Valid values are 1, 2, 4, 8 and 16 other values result in oversampling = 1.
+// tsp: Pointer to transmission status codes.
 float bme_get_hum_percent(SensorConstants *scp, uint8_t oversampling,
                           TransmitStatus *tsp) {
   uint32_t raw_hum = bme_get_hum_raw(oversampling, tsp);

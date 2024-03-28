@@ -2,6 +2,7 @@
 #include "avr/io.h"
 #include <stdint.h>
 
+
 uint8_t init_i2c(uint8_t speed, uint8_t prescale) {
   if (prescale > 3) {
     // Prescaler has to be 0, 1 or 2.
@@ -18,6 +19,7 @@ uint8_t init_i2c(uint8_t speed, uint8_t prescale) {
   return 0;
 }
 
+
 uint8_t master_transmit_read_reg(uint8_t address, uint8_t data) {
   // Prepare for Transmission and set start bit.
   TWCR = (1 << TWEN) | (1 << TWSTA) | (1 << TWINT);
@@ -30,7 +32,6 @@ uint8_t master_transmit_read_reg(uint8_t address, uint8_t data) {
     // Error: Start failed!
     return 1;
   }
-
   // Determine Address along with write bit (0 for last bit).
   TWDR = (address << 1) & ~(0b1);
   // Transmit address with write command.
@@ -41,7 +42,6 @@ uint8_t master_transmit_read_reg(uint8_t address, uint8_t data) {
     // Error: No acknowledgement for address!
     return 22;
   }
-
   // Now the byte of data can be sent.
   TWDR = data;
   // Transmit data.
@@ -52,11 +52,11 @@ uint8_t master_transmit_read_reg(uint8_t address, uint8_t data) {
     // Error: No acknowledgement for data!
     return 3;
   }
-
   // Stop Transfer!
   TWCR = (1 << TWEN) | (1 << TWSTO) | (1 << TWINT);
   return 0;
 }
+
 
 uint8_t master_transmit_write_to_reg(uint8_t address, uint8_t reg,
                                      uint8_t value) {
@@ -71,7 +71,6 @@ uint8_t master_transmit_write_to_reg(uint8_t address, uint8_t reg,
     // Error: Start failed!
     return 1;
   }
-
   // Determine Address along with write bit (0 for last bit).
   TWDR = (address << 1) & ~(0b1);
   // Transmit address with write command.
@@ -82,7 +81,6 @@ uint8_t master_transmit_write_to_reg(uint8_t address, uint8_t reg,
     // Error: No acknowledgement for address!
     return 2;
   }
-
   // Now the first byte of data can be sent.
   TWDR = reg;
   // Transmit data.
@@ -93,7 +91,6 @@ uint8_t master_transmit_write_to_reg(uint8_t address, uint8_t reg,
     // Error: No acknowledgement for data!
     return 3;
   }
-
   // Now the second byte of data can be sent.
   TWDR = value;
   // Transmit data.
@@ -104,11 +101,11 @@ uint8_t master_transmit_write_to_reg(uint8_t address, uint8_t reg,
     // Error: No acknowledgement for data!
     return 4;
   }
-
   // Stop Transfer!
   TWCR = (1 << TWEN) | (1 << TWSTO) | (1 << TWINT);
   return 0;
 }
+
 
 uint8_t master_receive_byte(uint8_t address, uint8_t *storage) {
   // Prepare to receive and set Start Bit.
@@ -132,7 +129,6 @@ uint8_t master_receive_byte(uint8_t address, uint8_t *storage) {
     // Error: No acknowledgement for address!
     return 2;
   }
-
   // Enable the first and last data package and deactivate acknowledge.
   TWCR = (1 << TWEN) | (1 << TWINT);
   while (!(TWCR & (1 << TWINT)))
@@ -147,6 +143,7 @@ uint8_t master_receive_byte(uint8_t address, uint8_t *storage) {
   TWCR = (1 << TWEN) | (1 << TWSTO) | (1 << TWINT);
   return 0;
 }
+
 
 uint8_t master_receive_nbytes(uint8_t address, uint8_t *storage,
                               uint8_t num_bytes) {
@@ -166,7 +163,6 @@ uint8_t master_receive_nbytes(uint8_t address, uint8_t *storage,
     // Error: Start failed!
     return 1;
   }
-
   // Determine Address along with read bit (1 for last bit).
   TWDR = (address << 1) | 0b1;
   // Transmit address with write command.
@@ -177,7 +173,6 @@ uint8_t master_receive_nbytes(uint8_t address, uint8_t *storage,
     // Error: No acknowledgement for address!
     return 2;
   }
-
   // Now the reading process begins.
   for (int i = 0; i < num_bytes - 1; i++) {
     // Enable the first data package.
@@ -199,7 +194,6 @@ uint8_t master_receive_nbytes(uint8_t address, uint8_t *storage,
     return 4;
   }
   *(storage + (num_bytes - 1)) = TWDR;
-
   // Stop reading!
   TWCR = (1 << TWEN) | (1 << TWSTO) | (1 << TWINT);
   return 0;
