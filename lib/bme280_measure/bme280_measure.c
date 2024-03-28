@@ -1,6 +1,6 @@
 #include "bme280_measure.h"
 #include "i2c_transmission.h"
-#include "uart_transmission.h"
+// #include "uart_transmission.h"
 #include "util/delay.h"
 #include <stdint.h>
 #include <string.h>
@@ -184,9 +184,9 @@ void worst_case_delay(uint8_t ovs_t, uint8_t ovs_p, uint8_t ovs_h) {
   // States representing if an oversampling value is given, hence a
   // measurement will be done or not.
   state_machine = bit_1 + bit_2 + bit_3;
-  send_string("\n\rDEBUG!\n\r");
-  send_unsigned_decimal(state_machine);
-  send_string("\n\rDEBUG!\n\r");
+  // send_string("\n\rDEBUG!\n\r");
+  // send_unsigned_decimal(state_machine);
+  // send_string("\n\rDEBUG!\n\r");
   switch (state_machine) {
   case 0:
     break;
