@@ -191,13 +191,13 @@ void worst_case_delay(uint8_t ovs_t, uint8_t ovs_p, uint8_t ovs_h) {
   case 0:
     break;
   case 1:
-    _delay_ms(50);
+    _delay_ms(80);
     break;
   case 2:
-    _delay_ms(100);
+    _delay_ms(160);
     break;
   case 3:
-    _delay_ms(150);
+    _delay_ms(240);
     break;
   default:
     break;
