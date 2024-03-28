@@ -1,6 +1,6 @@
 #include "bme280_measure.h"
 #include "i2c_transmission.h"
-// #include "uart_transmission.h"
+#include "uart_transmission.h"
 #include "util/delay.h"
 #include <stdint.h>
 #include <string.h>
@@ -172,13 +172,36 @@ uint8_t determine_general_ovs(uint8_t oversampling) {
   return choose_os;
 }
 
-// Local function to estimate the maximum delay needed.
-uint8_t estimate_delay_ms(uint8_t ovs_t, uint8_t ovs_p, uint8_t ovs_h) {
-  float term_t = 2.3 * ovs_t;
-  float term_p = ovs_p != 0 ? 2.3 * ovs_p + 0.575 : 0;
-  float term_h = ovs_h != 0 ? 2.3 * ovs_h + 0.575 : 0;
-  float sum = term_t + term_p + term_h + 1;
-  return (uint8_t)sum;
+// Local function to delay the device as long as the measurement takes.
+// Since the _delay_ms() function needs a fixed value at compile time,
+// three worst case alternatives are made.
+// TODO: Find a more elegant solution, e.g. with timers.
+void worst_case_delay(uint8_t ovs_t, uint8_t ovs_p, uint8_t ovs_h) {
+  uint8_t state_machine = 0;
+  uint8_t bit_1 = ovs_t != 0 ? 1 : 0;
+  uint8_t bit_2 = ovs_p != 0 ? 1 : 0;
+  uint8_t bit_3 = ovs_h != 0 ? 1 : 0;
+  // States representing if an oversampling value is given, hence a
+  // measurement will be done or not.
+  state_machine = bit_1 + bit_2 + bit_3;
+  send_string("\n\rDEBUG!\n\r");
+  send_unsigned_decimal(state_machine);
+  send_string("\n\rDEBUG!\n\r");
+  switch (state_machine) {
+  case 0:
+    break;
+  case 1:
+    _delay_ms(50);
+    break;
+  case 2:
+    _delay_ms(100);
+    break;
+  case 3:
+    _delay_ms(150);
+    break;
+  default:
+    break;
+  }
 }
 
 // Local function to transmit start of measurement and provide enough
@@ -204,8 +227,7 @@ uint8_t start_measurement(uint8_t ovs_t, uint8_t ovs_p, uint8_t ovs_h,
     return check_status;
   }
   // Max Value here is about 120 ms so uint8_t is enough.
-  uint8_t dly = estimate_delay_ms(ovs_t, ovs_p, ovs_h);
-  _delay_ms(dly);
+  worst_case_delay(ovs_t, ovs_p, ovs_h);
   return 0;
 }
 
@@ -268,15 +290,15 @@ uint32_t bme_get_hum_raw(uint8_t oversampling, TransmitStatus *tsp) {
   }
   // Create buffer to store the humidity value.
   uint8_t hum_data_buf[BME280_HUM_LEN] = {};
-  uint32_t raw_hum = 0;
+  uint32_t raw_hum = 0x0;
   check_status =
-      master_receive_nbytes(BME280_ADDRESS_GND, hum_data_buf, BME280_TEMP_LEN);
+      master_receive_nbytes(BME280_ADDRESS_GND, hum_data_buf, BME280_HUM_LEN);
   if (check_status != 0) {
     strcpy(tsp->status_msg, "HUM_LD_ERR");
     return check_status;
   }
   // Get the correct value (1. MSB, 2. LSB)
-  raw_hum = ((uint32_t)hum_data_buf[0] << 8) | hum_data_buf[1];
+  raw_hum = ((uint16_t)hum_data_buf[0] << 8) | hum_data_buf[1];
   strcpy(tsp->status_msg, "HUM_LD_SUCC");
   return raw_hum;
 }

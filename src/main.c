@@ -34,6 +34,8 @@ int main() {
     send_float(temperature, 2);
     send_string(" °C\r\n");
     humidity = bme_get_hum_percent(&bme280_comp_vals, 16, &bme_transmit_status);
+    // humidity = bme_get_hum_raw(16, &bme_transmit_status);
+    // uint32_t hum_comp = compensate_hum(humidity, &bme280_comp_vals);
     send_string("\r\nHumidity read status:\r\n");
     send_string(bme_transmit_status.status_msg);
     send_string("\r\nHumidity in percent: ");
