@@ -1,7 +1,6 @@
 #include "bme280_measure.h"
 #include "i2c_transmission.h"
 #include "uart_transmission.h"
-#include <stdint.h>
 #include <util/delay.h>
 
 int main() {
@@ -12,7 +11,6 @@ int main() {
   // For I2C Clock of 400 kHz speed,
   // set value of 12 without prescaling.
   init_i2c(12, 0);
-  init_uart_transmission((uint16_t)9600);
   bme_init(&bme_transmit_status);
   send_string("\r\nInitialization status:\r\n");
   send_string(bme_transmit_status.status_msg);
